@@ -6,9 +6,10 @@ async function getAll(): Promise<TProduct[]> {
   return result;
 }
 
-async function createProduct(name: string, amount: string) {
-  const result = await productsModels.createProduct(name, amount);
-  return result;
+async function createProduct(name: string, amount: string): Promise<TProduct> {
+  const id = await productsModels.createProduct(name, amount);
+  const newProduct: TProduct = { id, name, amount };
+  return newProduct;
 }
 
 export default { getAll, createProduct };
