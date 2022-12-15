@@ -1,10 +1,10 @@
 import usersModels from '../models/users.models';
 import { TResponse, TUser } from '../types';
-import createToken from '../auth/jwtFunctions';
+import { createToken } from '../auth/jwtFunctions';
 
 async function createUser(user: TUser): Promise<object> {
-  await usersModels.createUser(user);
-  const token = createToken(user);
+  const id = await usersModels.createUser(user);
+  const token = createToken({ id, ...user });
   return { token };
 }
 

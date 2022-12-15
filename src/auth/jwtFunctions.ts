@@ -13,4 +13,16 @@ const createToken = (user: TUser): string => {
   return JWT.sign(payload, secret as string, jwtConfig as object);
 };
 
-export default createToken;
+const decodeToken = (token:string): object => {
+  const decode = JWT.decode(token);
+
+  return decode as object;
+};
+
+const verifyToken = (token: string) => {
+  const checkToken = JWT.verify(token, secret);
+  
+  return checkToken as object;
+};
+
+export { createToken, decodeToken, verifyToken };

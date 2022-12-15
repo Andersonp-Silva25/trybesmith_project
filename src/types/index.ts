@@ -14,7 +14,7 @@ export type TUser = {
 };
 
 export type TOrder = {
-  id: number,
+  id?: number,
   userId: number,
   productsIds: number[],
 };
@@ -22,4 +22,8 @@ export type TOrder = {
 export type TResponse = {
   type: number | null,
   message: string,
+};
+
+export type TToken = {
+  id: number,
 };

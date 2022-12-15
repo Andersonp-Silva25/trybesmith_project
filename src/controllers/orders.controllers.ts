@@ -6,4 +6,11 @@ async function getAllOrders(_req: Request, res: Response) {
   return res.status(200).json(orders);
 }
 
-export default { getAllOrders };
+async function createOrder(req: Request, res: Response) {
+  const { productsIds } = req.body;
+  const { authorization: token } = req.headers;  
+  const newOrder = await ordersServices.createOrder(token as string, productsIds);
+  return res.status(201).json(newOrder);
+}
+
+export default { getAllOrders, createOrder };
