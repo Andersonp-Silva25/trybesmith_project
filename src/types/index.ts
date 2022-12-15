@@ -18,3 +18,8 @@ export type TOrder = {
   userId: number,
   productsIds: number[],
 };
+
+export type TResponse = {
+  type: number | null,
+  message: string,
+};

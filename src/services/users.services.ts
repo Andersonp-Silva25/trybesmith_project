@@ -1,5 +1,5 @@
 import usersModels from '../models/users.models';
-import { TUser } from '../types';
+import { TResponse, TUser } from '../types';
 import createToken from '../auth/jwtFunctions';
 
 async function createUser(user: TUser): Promise<object> {
@@ -8,4 +8,14 @@ async function createUser(user: TUser): Promise<object> {
   return { token };
 }
 
-export default { createUser };
+async function getByUserAndPass(login: TUser): Promise<TResponse> {
+  const user = await usersModels.getByUserAndPass(login);
+  
+  if (!user) return { type: 401, message: 'Username or password invalid' };
+  
+  const token = createToken(user as TUser);
+  
+  return { type: null, message: token };
+}
+
+export default { createUser, getByUserAndPass };

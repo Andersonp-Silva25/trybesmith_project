@@ -1,4 +1,4 @@
-import { ResultSetHeader } from 'mysql2/promise';
+import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { TUser } from '../types';
 import connection from './connection';
 
@@ -9,4 +9,13 @@ async function createUser(user: TUser): Promise<void> {
   );
 }
 
-export default { createUser };
+async function getByUserAndPass({ username, password }: TUser): Promise<TUser | number> {
+  const [user] = await connection.execute<RowDataPacket[] & TUser>(
+    'SELECT * FROM Trybesmith.users WHERE username = ? AND password = ?;',
+    [username, password],
+  );
+  if (!user.length) return user.length;
+  return user;
+}
+
+export default { createUser, getByUserAndPass };
